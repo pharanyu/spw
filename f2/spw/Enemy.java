@@ -30,13 +30,25 @@ public class Enemy extends Sprite{
 	}
 
 	public void proceed(){
+		System.out.println(step);
 		y += step;
+		step += 0.5;
 		if(y > Y_TO_DIE){
 			alive = false;
 		}
+		
 	}
 	
 	public boolean isAlive(){
 		return alive;
+	}
+	public int getstep(){
+		return step;
+	}
+	public void setstep(int step){
+		this.step = step;
+	}
+	public void increasstep(){
+		step += 100;
 	}
 }
