@@ -30,7 +30,7 @@ public class Enemy extends Sprite{
 	}
 
 	public void proceed(){
-		System.out.println(step);
+		//System.out.println(step);
 		y += step;
 		step += 0.5;
 		if(y > Y_TO_DIE){

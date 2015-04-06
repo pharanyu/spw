@@ -72,7 +72,11 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
-				die();
+				v.crash();
+				if(v.gethp() == 0){
+					die();
+				
+				}
 				return;
 			}
 		}
@@ -94,7 +98,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			v.moveY(1);
 			break;
 		case KeyEvent.VK_UP:
-			v.moveY(-1);;
+			v.moveY(-1);
 			break;
 		case KeyEvent.VK_D:
 			difficulty += 0.1;
@@ -104,6 +108,9 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
 		return score;
+	}
+	public int gethearth(){
+		return v.gethp();
 	}
 	
 	@Override
