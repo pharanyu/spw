@@ -3,14 +3,14 @@ package f2.spw;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+
+
 public class SpaceShip extends Sprite{
 
 	int step = 13;
 	private int hp = 1000;
-	
 	public SpaceShip(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		
 	}
 
 	@Override
@@ -43,7 +43,11 @@ public class SpaceShip extends Sprite{
 	public void crash(){
 		hp -= 100;
 	}
-	  
+
+	public Lasor attack(){
+		Lasor lasor = new Lasor(x, y);
+		return lasor;
+	}
 	 
 
 }
