@@ -84,10 +84,12 @@ public class GameEngine implements KeyListener, GameReporter{
 			er = e.getRectangle();
 			if(er.intersects(vr)){
 				v.crash();
-				if(v.gethp() == -100){
+				enemies.remove(e);
+				gp.sprites.remove(e);
+				if(v.gethp() == 0){
 					die();
-				
 				}
+				gp.updateGameUI(this);
 				return;
 			}
 		}

@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel {
-	
+	BufferedImage bg;
 	//private BufferedImage bkg = loadimage("space.png");
 	private BufferedImage bi;	
 	Graphics2D big;
@@ -23,17 +23,23 @@ public class GamePanel extends JPanel {
 		big = (Graphics2D) bi.getGraphics();
 		big.setBackground(Color.BLACK);
 		//big.drawImage(bkg, null, 0, 0);
+		try{
+			bg = ImageIO.read(new File("f2/spw/space.png"));
+		}
+		catch(IOException e){
+			
+		}
 	}
 
 	public void updateGameUI(GameReporter reporter){
 		big.clearRect(0, 0, 400, 600);
-		
+		big.drawImage(bg, 0, 0, 400, 600, null);
 		big.setColor(Color.WHITE);		
 		big.drawString(String.format("HP:%08d score:%08d",reporter.gethearth(),reporter.getScore()), 200, 20);
 		for(Sprite s : sprites){
 			s.draw(big);
 		}
-		
+	
 		repaint();
 	}
 

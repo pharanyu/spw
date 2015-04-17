@@ -2,11 +2,16 @@ package f2.spw;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 
 
 public class SpaceShip extends Sprite{
-
+	BufferedImage bg;
 	int step = 13;
 	private int hp = 1000;
 	public SpaceShip(int x, int y, int width, int height) {
@@ -15,8 +20,16 @@ public class SpaceShip extends Sprite{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(Color.GREEN);
-		g.fillRect(x, y, width, height);
+		//g.setColor(Color.GREEN);
+		//g.fillRect(x, y, width, height);
+		try{
+			bg = ImageIO.read(new File("f2/spw/spaceship.gif"));
+		}
+		catch(IOException e){
+			
+		}
+		g.drawImage(bg, x, y, width, height, null);
+		
 		
 	}
 
@@ -45,7 +58,7 @@ public class SpaceShip extends Sprite{
 	}
 
 	public Lasor attack(){
-		Lasor lasor = new Lasor(x, y);
+		Lasor lasor = new Lasor(x+width/2, y);
 		return lasor;
 	}
 	 
