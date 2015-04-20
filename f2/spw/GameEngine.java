@@ -72,6 +72,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			l.proceed();
 			if(!l.isAlive()){
 				l_iter.remove();
+				
 				gp.sprites.remove(l);
 			}
 		}

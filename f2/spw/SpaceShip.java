@@ -58,7 +58,7 @@ public class SpaceShip extends Sprite{
 	}
 
 	public Lasor attack(){
-		Lasor lasor = new Lasor(x+width/2, y);
+		Lasor lasor = new Lasor(x+width/2-5, y);
 		return lasor;
 	}
 	 
