@@ -2,11 +2,14 @@ package f2.spw;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Timer;
 
 
 
@@ -37,15 +40,15 @@ public class SpaceShip extends Sprite{
 		x += (step * direction); 
 		if(x < 0)
 			x = 0;
-		if(x > 400 - width)
-			x = 400 - width;
+		if(x > 600 - width)
+			x = 600 - width;
 	}
 	public void moveY(int direction){
 		y += (step * direction); 
 		if(y < 0)
 			y = 0;
-		if(y > 600 - height)
-			y = 600 - height;
+		if(y > 900 - height)
+			y = 900 - height;
 	}
 	
 	public int gethp(){
@@ -58,7 +61,7 @@ public class SpaceShip extends Sprite{
 	}
 
 	public Lasor attack(){
-		Lasor lasor = new Lasor(x+width/2-5, y);
+		Lasor lasor = new Lasor(x+width/2-9, y-30);
 		return lasor;
 	}
 	 

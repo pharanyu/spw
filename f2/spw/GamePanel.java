@@ -19,7 +19,7 @@ public class GamePanel extends JPanel {
 	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 
 	public GamePanel() {
-		bi = new BufferedImage(400, 600, BufferedImage.TYPE_INT_ARGB);
+		bi = new BufferedImage(600, 900, BufferedImage.TYPE_INT_ARGB);
 		big = (Graphics2D) bi.getGraphics();
 		big.setBackground(Color.BLACK);
 		//big.drawImage(bkg, null, 0, 0);
@@ -32,10 +32,10 @@ public class GamePanel extends JPanel {
 	}
 
 	public void updateGameUI(GameReporter reporter){
-		big.clearRect(0, 0, 400, 600);
-		big.drawImage(bg, 0, 0, 400, 600, null);
+		big.clearRect(0, 0, 600, 900);
+		big.drawImage(bg, 0, 0, 600, 900, null);
 		big.setColor(Color.WHITE);		
-		big.drawString(String.format("HP:%08d score:%08d",reporter.gethearth(),reporter.getScore()), 200, 20);
+		big.drawString(String.format("HP:%08d score:%08d",reporter.gethearth(),reporter.getScore()), 400, 20);
 		for(Sprite s : sprites){
 			s.draw(big);
 		}

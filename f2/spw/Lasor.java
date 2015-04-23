@@ -15,7 +15,7 @@ public class Lasor extends Sprite{
 	
 	
 	public Lasor(int x, int y) {
-		super(x, y, 12, 30);
+		super(x, y, 20, 65);
 		
 	}
 

@@ -10,14 +10,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Enemy extends Sprite{
-	public static final int Y_TO_FADE = 400;
-	public static final int Y_TO_DIE = 600;
+	public static final int Y_TO_FADE = 600;
+	public static final int Y_TO_DIE = 900;
 	BufferedImage bg;
 	private int step = 12;
 	private boolean alive = true;
 	
 	public Enemy(int x, int y) {
-		super(x, y, 20, 50);
+		super(x, y, 30, 75);
 		
 	}
 

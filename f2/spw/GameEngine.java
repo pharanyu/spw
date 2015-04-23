@@ -7,6 +7,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.lang.Thread;
 
 import javax.swing.Timer;
 
@@ -28,14 +29,14 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		gp.sprites.add(v);
 		
-		timer = new Timer(50, new ActionListener() {
-			
+		timer = new Timer(35, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				process();
 			}
 		});
 		timer.setRepeats(true);
+		
 		
 	}
 	
@@ -44,11 +45,15 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	
 	private void generateEnemy(){
-		Enemy e = new Enemy((int)(Math.random()*390), 30);
+		Enemy e = new Enemy((int)(Math.random()*590), 30);
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
-	
+	private void generateLasor(){
+		Lasor l = v.attack();
+		gp.sprites.add(l);
+		lasors.add(l);
+	}
 	private void process(){
 		if(Math.random() < difficulty){
 			generateEnemy();
@@ -72,7 +77,6 @@ public class GameEngine implements KeyListener, GameReporter{
 			l.proceed();
 			if(!l.isAlive()){
 				l_iter.remove();
-				
 				gp.sprites.remove(l);
 			}
 		}
@@ -81,8 +85,19 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		Rectangle2D.Double vr = v.getRectangle();
 		Rectangle2D.Double er;
+		Rectangle2D.Double lr;
 		for(Enemy e : enemies){
 			er = e.getRectangle();
+			for(Lasor lasor : lasors){
+				lr = lasor.getRectangle();
+				if(er.intersects(lr)){
+					enemies.remove(e);
+					gp.sprites.remove(e);
+					lasors.remove(lasor);
+					gp.sprites.remove(lasor);
+					return;
+				}
+			}
 			if(er.intersects(vr)){
 				v.crash();
 				enemies.remove(e);
@@ -120,9 +135,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			difficulty += 0.1;
 			break;
 		case KeyEvent.VK_SPACE:
-			Lasor l = v.attack();
-			gp.sprites.add(l);
-			lasors.add(l);
+			generateLasor();
 			break;
 		}
 	}
