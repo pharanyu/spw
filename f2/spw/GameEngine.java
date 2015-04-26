@@ -19,9 +19,10 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Lasor> lasors = new ArrayList<Lasor>();
 	private SpaceShip v;	
 	
-	private Timer timer;	
+	private Timer timer, timediff;	
 	private long score = 0;
 	private double difficulty = 0.1;
+	private int level = 1;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -37,11 +38,21 @@ public class GameEngine implements KeyListener, GameReporter{
 		});
 		timer.setRepeats(true);
 		
+		timediff = new Timer(10000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				difficulty += 0.02;
+				level++;
+				//System.out.println(difficulty + "   "+level);
+			}
+		});
+		timediff.setRepeats(true);
 		
 	}
 	
 	public void start(){
 		timer.start();
+		timediff.start();
 	}
 	
 	private void generateEnemy(){
@@ -115,6 +126,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	
 	public void die(){
 		timer.stop();
+		timediff.stop();
 	}
 	
 	void controlVehicle(KeyEvent e) {
@@ -145,6 +157,10 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	public int gethearth(){
 		return v.gethp();
+	}
+	
+	public int getlevel(){
+		return level;
 	}
 	
 	@Override

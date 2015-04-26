@@ -15,7 +15,7 @@ import javax.swing.Timer;
 
 public class SpaceShip extends Sprite{
 	BufferedImage bg;
-	int step = 13;
+	int step = 23;
 	private int hp = 1000;
 	public SpaceShip(int x, int y, int width, int height) {
 		super(x, y, width, height);
