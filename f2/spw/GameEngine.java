@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.lang.Thread;
 
 import javax.swing.Timer;
 
@@ -23,6 +22,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	private long score = 0;
 	private double difficulty = 0.1;
 	private int level = 1;
+	
+	private int canshoot = 20;
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
@@ -66,6 +67,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		lasors.add(l);
 	}
 	private void process(){
+		canshoot++;
 		if(Math.random() < difficulty){
 			generateEnemy();
 		}
@@ -147,7 +149,10 @@ public class GameEngine implements KeyListener, GameReporter{
 			difficulty += 0.1;
 			break;
 		case KeyEvent.VK_SPACE:
-			generateLasor();
+			if(canshoot > 20){
+				generateLasor();
+				canshoot = 0;
+			}
 			break;
 		}
 	}
