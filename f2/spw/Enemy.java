@@ -56,6 +56,7 @@ public class Enemy extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
+	
 	public int getstep(){
 		return step;
 	}

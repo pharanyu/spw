@@ -17,19 +17,21 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
 	private ArrayList<Lasor> lasors = new ArrayList<Lasor>();
 	private SpaceShip v;	
-	
+	private SpaceShip v2;
 	private Timer timer, timediff;	
 	private long score = 0;
-	private double difficulty = 0.1;
+	private double difficulty = 0.05;
 	private int level = 1;
 	
-	private int canshoot = 20;
+	private int canshoot1 = 20;
+	private int canshoot2 = 20;
 	
-	public GameEngine(GamePanel gp, SpaceShip v) {
+	public GameEngine(GamePanel gp, SpaceShip v, SpaceShip v2) {
 		this.gp = gp;
 		this.v = v;		
-		
+		this.v2 = v2;
 		gp.sprites.add(v);
+		gp.sprites.add(v2);
 		
 		timer = new Timer(35, new ActionListener() {
 			@Override
@@ -61,13 +63,23 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e);
 		enemies.add(e);
 	}
-	private void generateLasor(){
-		Lasor l = v.attack();
-		gp.sprites.add(l);
-		lasors.add(l);
+	private void generateLasor(int type){
+		Lasor l;
+		if(type == 1){
+			l = v.attack();
+			gp.sprites.add(l);
+			lasors.add(l);
+		}
+		if(type == 2){
+			l = v2.attack();
+			gp.sprites.add(l);
+			lasors.add(l);
+		}
+		
 	}
 	private void process(){
-		canshoot++;
+		canshoot1++;
+		canshoot2++;
 		if(Math.random() < difficulty){
 			generateEnemy();
 		}
@@ -97,6 +109,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		//gp.updateGameUI(this);
 		
 		Rectangle2D.Double vr = v.getRectangle();
+		Rectangle2D.Double v2r = v2.getRectangle();
 		Rectangle2D.Double er;
 		Rectangle2D.Double lr;
 		for(Enemy e : enemies){
@@ -108,9 +121,13 @@ public class GameEngine implements KeyListener, GameReporter{
 					gp.sprites.remove(e);
 					lasors.remove(lasor);
 					gp.sprites.remove(lasor);
+					gp.updateGameUI(this);
 					return;
 				}
 			}
+		}
+		for(Enemy e : enemies){
+			er = e.getRectangle();
 			if(er.intersects(vr)){
 				v.crash();
 				enemies.remove(e);
@@ -121,6 +138,19 @@ public class GameEngine implements KeyListener, GameReporter{
 				gp.updateGameUI(this);
 				return;
 			}
+		}
+		for(Enemy e : enemies){
+			er = e.getRectangle();
+			if(er.intersects(v2r)){
+				v2.crash();
+				enemies.remove(e);
+				gp.sprites.remove(e);
+				if(v2.gethp() == 0){
+					die();
+				}
+				gp.updateGameUI(this);
+				return;
+			}			
 		}
 		
 		gp.updateGameUI(this);
@@ -133,35 +163,56 @@ public class GameEngine implements KeyListener, GameReporter{
 	
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_LEFT:
+		case KeyEvent.VK_NUMPAD4:
 			v.moveX(-1);
 			break;
-		case KeyEvent.VK_RIGHT:
+		case KeyEvent.VK_NUMPAD6:
 			v.moveX(1);
 			break;
-		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_NUMPAD5:
 			v.moveY(1);
 			break;
-		case KeyEvent.VK_UP:
+		case KeyEvent.VK_NUMPAD8:
 			v.moveY(-1);
 			break;
-		case KeyEvent.VK_D:
+		case KeyEvent.VK_X:
 			difficulty += 0.1;
 			break;
-		case KeyEvent.VK_SPACE:
-			if(canshoot > 20){
-				generateLasor();
-				canshoot = 0;
+		case KeyEvent.VK_CONTROL:
+			if(canshoot1 > 20){
+				generateLasor(1);
+				canshoot1 = 0;
 			}
 			break;
+		case KeyEvent.VK_A:
+			v2.moveX(-1);
+			break;
+		case KeyEvent.VK_D:
+			v2.moveX(1);
+			break;
+		case KeyEvent.VK_S:
+			v2.moveY(1);
+			break;
+		case KeyEvent.VK_W:
+			v2.moveY(-1);
+			break;
+		case KeyEvent.VK_SPACE:
+			if(canshoot2 > 20){
+				generateLasor(2);
+				canshoot2 = 0;
+			}
+			break;	
 		}
 	}
 
 	public long getScore(){
 		return score;
 	}
-	public int gethearth(){
+	public int gethearthV1(){
 		return v.gethp();
+	}
+	public int gethearthV2(){
+		return v2.gethp();
 	}
 	
 	public int getlevel(){
