@@ -36,7 +36,7 @@ public class GamePanel extends JPanel {
 		int c=0;
 		big.clearRect(0, 0, 600, 900);
 		big.drawImage(bg, 0, 0, 600, 900, null);
-		big.setColor(Color.WHITE);		
+		big.setColor(Color.WHITE);	
 		big.drawString(String.format("HP"), 360, 20);
 		big.drawString(String.format("LEVEL : %d",reporter.getlevel()), 20, 20);
 		for(int i = 100; i <= reporter.gethearthV1(); i +=100){

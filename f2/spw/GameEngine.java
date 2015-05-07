@@ -159,6 +159,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	public void die(){
 		timer.stop();
 		timediff.stop();
+		ScoreReport s = new ScoreReport(this);
 	}
 	
 	void controlVehicle(KeyEvent e) {
@@ -197,7 +198,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			v2.moveY(-1);
 			break;
 		case KeyEvent.VK_SPACE:
-			if(canshoot2 > 20){
+			if(canshoot2 > 10){
 				generateLasor(2);
 				canshoot2 = 0;
 			}
